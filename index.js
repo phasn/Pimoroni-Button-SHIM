@@ -134,7 +134,7 @@ export class BtnSHIM{
 		this.runID = undefined;
 	};
 
-	quit(_this){
+	quit(_this=this){
 		if(_this.running){
 			_this.set_pixel(0, 0, 0);
 			_this.updateLED();
