@@ -5,7 +5,7 @@ import uC				from 'util.console';
 import {addExitScript}	from 'util.safeinit';
 
 const sleep = sec => {
-	if(!sec) throw new Error('TypeError: sleep() takes exactly one argument (0 given)');
+	if(sec===undefined) throw new Error('TypeError: sleep() takes exactly one argument (0 given)');
 	let endTime = +new Date() + parseInt(sec*1000);
 	while(+new Date() < endTime);
 };
