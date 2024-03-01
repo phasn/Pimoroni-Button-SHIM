@@ -2,8 +2,10 @@ import {BtnSHIM}	from './index.js';
 import uC			from 'util.console';
 import i2c			from 'i2c-bus';
 
-const bus = i2c.openSync(1);
-const shim = new BtnSHIM({bus: bus});
+const busNumber = 1;
+
+const bus = i2c.openSync(busNumber);
+const btnShim = new BtnSHIM({busNumber, bus});
 
 let testColors = {
 	A:{
@@ -32,25 +34,25 @@ let testColors = {
 		b: 0x00
 	}
 };
-shim.btnEmitter.on('btnPress', (btnName) => {
+btnShim.btnEmitter.on('btnPress', (btnName) => {
 	let c = testColors[btnName];
-	shim.set_pixel(c.r, c.g, c.b);
+	btnShim.set_pixel(c.r, c.g, c.b);
 
 	console.log(`${uC.red}btnEmitter caught the press of ${uC.b}button ${btnName}${uC.r}`);
 });
 
-// shim.btnEmitter.on('btnPress', (btnName) => {
+// btnShim.btnEmitter.on('btnPress', (btnName) => {
 // 	console.log(`${uC.red}btnEmitter caught the press of ${uC.b}button ${btnName}${uC.r}`);
 // });
-// shim.btnEmitter.on('btnHold', (btnName) => {
+// btnShim.btnEmitter.on('btnHold', (btnName) => {
 // 	console.log(`${uC.grn}btnEmitter caught the holding of ${uC.b}button ${btnName}${uC.r}`);
 // });
-// shim.btnEmitter.on('btnRelease', (btnName) => {
+// btnShim.btnEmitter.on('btnRelease', (btnName) => {
 // 	console.log(`${uC.blu}btnEmitter caught the release of ${uC.b}button ${btnName}${uC.r}`);
 // });
-// shim.btnEmitter.on('btnNonHeldRelease', (btnName) => {
+// btnShim.btnEmitter.on('btnNonHeldRelease', (btnName) => {
 // 	console.log(`${uC.cyn}btnEmitter caught the non-held release of ${uC.b}button ${btnName}${uC.r}`);
 // });
-// shim.btnEmitter.on('btnHeldRelease', (btnName) => {
+// btnShim.btnEmitter.on('btnHeldRelease', (btnName) => {
 // 	console.log(`${uC.mgt}btnEmitter caught the held release of ${uC.b}button ${btnName}${uC.r}`);
 // });

@@ -56,19 +56,20 @@ const LED_GAMMA = [
 
 
 export class BtnSHIM{
-	constructor(opts={}){
-		this.bus =			opts.bus			|| i2c.openSync(1);
-		this.address =		opts.address		|| BTN_SHIM_ADDR;
-		this.pollInterval =	opts.pollInterval	|| (1000 / FPS);// 		In *MILLI*seconds
-		this.holdTime =		opts.holdTime		|| HOLD_TIME;
-		this.errorLimit =	opts.errorLimit		|| ERROR_LIMIT;
-		this.errors =		0;
-		this.brightness =	0.5;
-		this.reg_queue =	[];
-		this.led_queue =	[];
-		this.btnEmitter =	new EventEmitter();
-		this.runID =		undefined;
-		this.running =		false;
+	constructor(config={}){
+		this.busNumber		= config.busNumber		?? 1;
+		this.bus			= config.bus			|| i2c.openSync(this.busNumber);
+		this.address		= config.address		|| BTN_SHIM_ADDR;
+		this.pollInterval	= config.pollInterval	|| (1000 / FPS);// 		In *MILLI*seconds
+		this.holdTime		= config.holdTime		|| HOLD_TIME;
+		this.errorLimit		= config.errorLimit		|| ERROR_LIMIT;
+		this.errors			= 0;
+		this.brightness		= 0.5;
+		this.reg_queue		= [];
+		this.led_queue		= [];
+		this.btnEmitter		= new EventEmitter();
+		this.runID			= undefined;
+		this.running		= false;
 
 		this.buttons = [
 			{
@@ -103,15 +104,15 @@ export class BtnSHIM{
 			},
 		];
 
-		this.setup();
+		this.init();
 	};
 
-	setup(){
+	init(){
 		this.bus.writeByteSync(this.address, REG_CONFIG, 0b00011111);
 		this.bus.writeByteSync(this.address, REG_POLARITY, 0x00);
 		this.bus.writeByteSync(this.address, REG_OUTPUT, 0b00000000);
 
-		addExitScript(this.quit, this);
+		addExitScript(this.terminate, this);
 
 		this.start();
 	};
@@ -134,7 +135,7 @@ export class BtnSHIM{
 		this.runID = undefined;
 	};
 
-	quit(_this=this){
+	terminate(_this=this){
 		if(_this.running){
 			_this.set_pixel(0, 0, 0);
 			_this.updateLED();
@@ -282,7 +283,6 @@ export class BtnSHIM{
 		this._write_byte(0);
 		this._enqueue();
 	};
-
 };
 
 export default BtnSHIM;
