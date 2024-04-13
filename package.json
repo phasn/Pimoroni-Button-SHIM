@@ -1,13 +1,15 @@
 {
 	"name": "pim301",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Driver for Pimoroni Button SHIM (PIM301)",
 	"main": "index.js",
 	"type": "module",
 	"repository": "github:phasn/PIM301",
 	"scripts":{
 		"test": "node test.js",
-		"start": "node test.js"
+		"node": "node app.js",
+		"bun": "bun app.js",
+		"start": "node app.js"
 	},
 	"author": "phasn",
 	"license": "ISC",

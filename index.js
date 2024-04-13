@@ -155,7 +155,7 @@ export class BtnSHIM{
 	queryBtns(){
 		let newStates = this.bus.readByteSync(this.address, REG_INPUT);
 
-		for(let i=0; i<5; i++){
+		for(let i=0; i<this.buttons.length; i++){
 			let btn = this.buttons[i];
 			let currState = (~newStates >> i) & 1;
 
