@@ -1,8 +1,9 @@
-import {Buffer}			from 'node:buffer';
-import {EventEmitter}	from 'node:events';
-import i2c				from 'i2c-bus';
-import uC				from 'util.console';
-import {addExitScript}	from 'util.safeinit';
+import {Buffer}					from 'node:buffer';
+import {EventEmitter}			from 'node:events';
+import i2c						from 'i2c-bus';
+import uC						from 'util.console';
+import {addExitScript}			from 'util.safeinit';
+import {rgbToHex, convertColor}	from './scripts/colorHandler.js';
 
 const sleep = sec => {
 	if(sec===undefined) throw new Error('TypeError: sleep() takes exactly one argument (0 given)');
@@ -67,6 +68,7 @@ export class BtnSHIM{
 		this.brightness		= 0.5;
 		this.reg_queue		= [];
 		this.led_queue		= [];
+		this.color			= [0,0,0];
 		this.btnEmitter		= new EventEmitter();
 		this.runID			= undefined;
 		this.running		= false;
@@ -122,13 +124,13 @@ export class BtnSHIM{
 
 		this.running = true;
 		this.runID = setInterval(()=>{this.run();}, this.pollInterval);
-		this.set_pixel(0, 0, 0);
+		this.setPixel(0, 0, 0);
 	};
 
 	stop(){
 		if(!this.running) return console.error('Button Shim is not running');
 
-		this.set_pixel(0, 0, 0);
+		this.setPixel(0, 0, 0);
 
 		clearInterval(this.runID);
 		this.running = false;
@@ -137,7 +139,7 @@ export class BtnSHIM{
 
 	terminate(_this=this){
 		if(_this.running){
-			_this.set_pixel(0, 0, 0);
+			_this.setPixel(0, 0, 0);
 			_this.updateLED();
 
 			_this.stop();
@@ -232,7 +234,7 @@ export class BtnSHIM{
 	};
 
 	_next(){
-		if(this.reg_queue.length == 0)	this.reg_queue = [0b00000000];
+		if(this.reg_queue.length===0)	this.reg_queue = [0b00000000];
 		else							this.reg_queue.push(this.reg_queue[-1]);
 	};
 
@@ -259,12 +261,23 @@ export class BtnSHIM{
 		}
 	};
 
-	setbrightness(brightness){
-		if(typeof brightness !== 'number' || brightness<0 || brightness>1)	throw new Error('ValueError: Brightness should be an int or float between 0.0 and 1.0');
+	setBrightness(brightness){
+		if(typeof brightness !== 'number' || isNaN(brightness) || brightness<0 || brightness>1)	throw new Error('ValueError: Brightness should be an int or float between 0.0 and 1.0');
+
+		let r = (this.brightness > 0) ? (this.color[0] / this.brightness) : 0;
+		let g = (this.brightness > 0) ? (this.color[1] / this.brightness) : 0;
+		let b = (this.brightness > 0) ? (this.color[2] / this.brightness) : 0;
+
 		this.brightness = brightness;
+
+		this.setPixel(r,g,b);
 	};
 
-	set_pixel(r,g,b){
+	getBrightness(){
+		return this.brightness;
+	};
+
+	setPixel(r,g,b){
 		if(!Number.isInteger(r) || r<0 || r>255)	throw new Error('ValueError: Argument r should be an int from 0 to 255');
 		if(!Number.isInteger(g) || g<0 || g>255)	throw new Error('ValueError: Argument g should be an int from 0 to 255');
 		if(!Number.isInteger(b) || b<0 || b>255)	throw new Error('ValueError: Argument b should be an int from 0 to 255');
@@ -272,6 +285,8 @@ export class BtnSHIM{
 		r = parseInt(r * this.brightness);
 		g = parseInt(g * this.brightness);
 		b = parseInt(b * this.brightness);
+
+		this.color = [r,g,b];
 
 		this._write_byte(0);
 		this._write_byte(0);
@@ -282,6 +297,38 @@ export class BtnSHIM{
 		this._write_byte(0);
 		this._write_byte(0);
 		this._enqueue();
+	};
+
+	setColor(color){
+		if(!color) return console.error('No color specified');
+
+		let colorArr = convertColor(color, 'arr');
+		if(!Array.isArray(colorArr)) return console.error('Could not set new color');
+
+		this.setPixel(colorArr[0], colorArr[1], colorArr[2]);
+
+		return console.log(`Set color to ${colorArr}`);
+	};
+
+	getColor(format='arr'){
+		let r = this.color[0];
+		let g = this.color[1];
+		let b = this.color[2];
+
+	// We don't need to use the validator from colorHandler.js
+	// because the strip's values are already valid and formatted
+
+		let hex = rgbToHex(r,g,b);
+
+		console.log(`\tHex: ${hex}`);
+		console.log(`\tR:   ${r}`);
+		console.log(`\tG:   ${g}`);
+		console.log(`\tB:   ${b}`);
+		console.log(`\tBrightness: ${this.brightness}`);
+
+		if(format==='hex') return hex;
+		if(format==='arr') return [r,g,b];
+		if(format==='obj') return {r,g,b};
 	};
 };
 
