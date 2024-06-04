@@ -6,7 +6,7 @@
 	"type": "module",
 	"repository": "github:phasn/PIM301",
 	"scripts":{
-		"test": "node .scripts/test.js",
+		"test": "node ./scripts/test.js",
 		"node": "node app.js",
 		"bun": "bun app.js",
 		"start": "node app.js"
