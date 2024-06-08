@@ -1,4 +1,4 @@
-import {BtnSHIM}	from './index.js';
+import {BtnSHIM}	from '../index.js';
 import uC			from 'util.console';
 import i2c			from 'i2c-bus';
 
@@ -36,7 +36,7 @@ let testColors = {
 };
 btnShim.btnEmitter.on('btnPress', (btnName) => {
 	let c = testColors[btnName];
-	btnShim.set_pixel(c.r, c.g, c.b);
+	btnShim.setPixel(c.r, c.g, c.b);
 
 	console.log(`${uC.red}btnEmitter caught the press of ${uC.b}button ${btnName}${uC.r}`);
 });

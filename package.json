@@ -1,6 +1,6 @@
 {
 	"name": "pim301",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"description": "Driver for Pimoroni Button SHIM (PIM301)",
 	"main": "index.js",
 	"type": "module",

@@ -38,27 +38,27 @@ API.btnShim = new BtnSHIM();
 
 // API.btnShim.btnEmitter.on('btnPress', (btnName) => {
 // 	let c = testColors[btnName];
-// 	API.btnShim.set_pixel(c.r, c.g, c.b);
+// 	API.btnShim.setPixel(c.r, c.g, c.b);
 
 // 	console.log(`${uC.red}btnEmitter caught the press of ${uC.b}button ${btnName}${uC.r}`);
 // });
 
 API.btnShim.btnEmitter.on('btnPress', (btnName) => {
 	console.log(`${uC.red}btnEmitter caught the press of ${uC.b}button ${btnName}${uC.r}`);
-	API.btnShim.set_pixel(testColors[btnName].r, testColors[btnName].g, testColors[btnName].b);
+	API.btnShim.setPixel(testColors[btnName].r, testColors[btnName].g, testColors[btnName].b);
 });
 API.btnShim.btnEmitter.on('btnHold', (btnName) => {
 	console.log(`${uC.grn}btnEmitter caught the holding of ${uC.b}button ${btnName}${uC.r}`);
 });
 API.btnShim.btnEmitter.on('btnRelease', (btnName) => {
 	console.log(`${uC.blu}btnEmitter caught the release of ${uC.b}button ${btnName}${uC.r}\n`);
-	API.btnShim.set_pixel(0x00, 0x00, 0x00);
 });
 API.btnShim.btnEmitter.on('btnNonHeldRelease', (btnName) => {
 	console.log(`${uC.cyn}btnEmitter caught the non-held release of ${uC.b}button ${btnName}${uC.r}`);
 });
 API.btnShim.btnEmitter.on('btnHeldRelease', (btnName) => {
 	console.log(`${uC.mgt}btnEmitter caught the held release of ${uC.b}button ${btnName}${uC.r}`);
+	API.btnShim.setPixel(0x00, 0x00, 0x00);
 });
 
 
