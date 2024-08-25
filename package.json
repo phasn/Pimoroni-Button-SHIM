@@ -4,7 +4,7 @@
 	"description": "Driver for Pimoroni Button SHIM (PIM301)",
 	"main": "index.js",
 	"type": "module",
-	"repository": "github:phasn/PIM301",
+	"repository": "git@github.com:phasn/PIM301.git",
 	"scripts":{
 		"test": "node ./scripts/test.js",
 		"node": "node app.js",
@@ -14,12 +14,12 @@
 	"author": "phasn",
 	"license": "ISC",
 	"devDependencies":{
-		"util.cli": "github:phasn/util.cli"
+		"util.cli": "git@github.com:phasn/util.cli.git"
 	},
 	"dependencies":{
 		"i2c-bus": "^5.2.3",
-		"util.console": "github:phasn/util.console",
-		"util.safeinit": "github:phasn/util.safeinit"
+		"util.console": "git@github.com:phasn/util.console.git",
+		"util.safeinit": "git@github.com:phasn/util.safeinit.git"
 	},
 	"config":{
 		"cli_name": "Button SHIM"
