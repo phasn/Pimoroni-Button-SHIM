@@ -1,4 +1,4 @@
-import uC, {__cmd, __arg} from 'util.console';
+import uC, {__cmd, __arg} from 'phasn-utils';
 
 
 export const API = {

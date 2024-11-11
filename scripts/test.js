@@ -1,5 +1,5 @@
 import {BtnSHIM}	from '../index.js';
-import uC			from 'util.console';
+import uC			from 'phasn-utils';
 import i2c			from 'i2c-bus';
 
 const busNumber = 1;

@@ -1,7 +1,6 @@
-import {BtnSHIM}				from './index.js';
-import uC						from 'util.console';
-import {API as mainAPI}			from './api.js';
-import {initRL, includeAPIs}	from 'util.cli';
+import {BtnSHIM}					from './index.js';
+import {API as mainAPI}				from './api.js';
+import uC, {initRL, includeAPIs}	from 'phasn-utils';
 
 const API = {};
 includeAPIs([mainAPI], API);

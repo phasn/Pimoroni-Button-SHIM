@@ -1,8 +1,7 @@
 import {Buffer}					from 'node:buffer';
 import {EventEmitter}			from 'node:events';
 import i2c						from 'i2c-bus';
-import uC						from 'util.console';
-import {addExitScript}			from 'util.safeinit';
+import uC, {addExitScript}		from 'phasn-utils';
 import {rgbToHex, convertColor}	from './scripts/colorHandler.js';
 
 const sleep = sec => {
