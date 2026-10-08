@@ -1,14 +1,9 @@
 import {Buffer}					from 'node:buffer';
 import {EventEmitter}			from 'node:events';
 import i2c						from 'i2c-bus';
-import uC, {addExitScript}		from 'phasn-utils';
+import uC, {addExitScript}		from '@phasn/phasn-utils';
 import {rgbToHex, convertColor}	from './scripts/colorHandler.js';
 
-const sleep = sec => {
-	if(sec===undefined) throw new Error('TypeError: sleep() takes exactly one argument (0 given)');
-	let endTime = +new Date() + parseInt(sec*1000);
-	while(+new Date() < endTime);
-};
 const range = (start, stop, step=1) => {
 	if(typeof stop === 'undefined'){
 		stop = start;

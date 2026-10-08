@@ -1,4 +1,4 @@
-import uC, {__cmd, __arg} from 'phasn-utils';
+import uC, {__cmd, __arg} from '@phasn/phasn-utils';
 
 
 export const API = {
