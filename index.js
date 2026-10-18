@@ -1,7 +1,7 @@
 import {Buffer}					from 'node:buffer';
 import {EventEmitter}			from 'node:events';
 import i2c						from 'i2c-bus';
-import uC, {addExitScript}		from '@phasn/phasn-utils';
+import uC, {addExitScript}		from 'phasn-utils';
 import {rgbToHex, convertColor}	from './scripts/colorHandler.js';
 
 const range = (start, stop, step=1) => {
