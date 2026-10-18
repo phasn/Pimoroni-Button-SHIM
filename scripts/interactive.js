@@ -1,5 +1,5 @@
-import {BtnSHIM}					from './index.js';
-import {API as mainAPI}				from './api.js';
+import {BtnSHIM}					from '../index.js';
+import {API as mainAPI}				from './interactive.api.js';
 import uC, {initRL, includeAPIs}	from 'phasn-utils';
 
 const API = {};

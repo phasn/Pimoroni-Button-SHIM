@@ -11,7 +11,7 @@
 	"homepage": "https://github.com/phasn/Pimoroni-Button-SHIM",
 	"scripts":{
 		"test": "node ./scripts/test.js",
-		"start": "node app.js"
+		"start": "node ./scripts/interactive.js"
 	},
 	"dependencies":{
 		"i2c-bus": "^5.2.3",
